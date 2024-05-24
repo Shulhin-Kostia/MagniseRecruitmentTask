@@ -1,0 +1,38 @@
+version: '3.4'
+
+networks:
+  default:
+    driver: bridge 
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgredb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - default
+  magniserecruitmenttask:
+    image: ${DOCKER_REGISTRY-}magniserecruitmenttask
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: MagniseRecruitmentTask/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    restart: unless-stopped
+    ports:
+      - 5000:8080
+    networks:
+      - default
+
+volumes:
+  postgres:
+    driver: local

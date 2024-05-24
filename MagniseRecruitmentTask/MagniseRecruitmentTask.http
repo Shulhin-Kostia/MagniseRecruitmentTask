@@ -1,0 +1,11 @@
+@MagniseRecruitmentTask_HostAddress = http://localhost:5098
+
+GET {{MagniseRecruitmentTask_HostAddress}}/coins/
+Accept: application/json
+
+###
+
+GET {{MagniseRecruitmentTask_HostAddress}}/coins
+Accept: application/json
+
+###
